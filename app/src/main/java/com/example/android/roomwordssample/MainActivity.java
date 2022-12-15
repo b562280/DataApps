@@ -29,8 +29,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static final String EXTRA_REPLY_NEW_ITEM = "com.example.android.itemListSQL.REPLY.NEW_ITEM";
+    public static final String EXTRA_REPLY_OLD_ITEM = "com.example.android.itemListSQL.REPLY.OLD_ITEM";
     public static final String EXTRA_REPLY_ITEM = "com.example.android.itemListSQL.REPLY.ITEM";
+
     public static final int NEW_Item_ACTIVITY_REQUEST_CODE = 1;
 
     private MainActivityViewModel mMainActivityViewModel;
@@ -65,18 +67,24 @@ public class MainActivity extends AppCompatActivity {
 
 //        createMultipleItems(10);
 
-        Intent intent = new Intent(MainActivity.this, NewItemActivity.class);
+        Intent intent = new Intent(this, NewItemActivity.class);
         startActivityForResult(intent, NEW_Item_ACTIVITY_REQUEST_CODE);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == 1102 && resultCode == RESULT_OK) {
+            Item newItem = (Item) data.getSerializableExtra(EXTRA_REPLY_NEW_ITEM);
+            System.out.println(newItem.getName());
+
+            mMainActivityViewModel.updateItem(newItem);
+        }
+
         if (requestCode == NEW_Item_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
             Item item = (Item) data.getSerializableExtra(EXTRA_REPLY_ITEM);
             mMainActivityViewModel.insert(item);
         }
-
         else {
             Toast.makeText(
                     getApplicationContext(),

@@ -10,7 +10,9 @@ import java.io.Serializable;
 
 
 public class Item implements Serializable {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    int ID;
+
     @NonNull
     @ColumnInfo(name = "name")
     private String mName;

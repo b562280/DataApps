@@ -39,4 +39,10 @@ public class ItemRepository {
             mItemDao.deleteAll();
         });
     }
+
+    void updateItem(Item newItem) {
+        ItemRoomDatabase.databaseWriteExecutor.execute(() -> {
+            mItemDao.updateItem(newItem);
+        });
+    }
 }

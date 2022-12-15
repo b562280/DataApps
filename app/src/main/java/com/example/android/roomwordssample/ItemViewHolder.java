@@ -1,17 +1,23 @@
 package com.example.android.roomwordssample;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private final TextView ItemViewName;
     private final TextView ItemViewDesc;
     private final TextView ItemViewLoc;
+    private Item itemOfPosition;
+
 
     private ItemViewHolder(View itemView) {
         super(itemView);
@@ -21,10 +27,11 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         itemView.setOnClickListener(this::onClick);
     }
 
-    public void bind(String textName, String textDesc, String textLoc) {
-        ItemViewDesc.setText(textDesc);
-        ItemViewName.setText(textName);
-        ItemViewLoc.setText(textLoc);
+    public void bind(Item item) {
+        ItemViewDesc.setText(item.getDescription());
+        ItemViewName.setText(item.getName());
+        ItemViewLoc.setText(item.getLocation());
+        itemOfPosition = item;
     }
 
     static ItemViewHolder create(ViewGroup parent) {
@@ -35,11 +42,9 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
 
     @Override
     public void onClick(View view) {
-        int mPosition = getLayoutPosition() + 1;
-        Toast.makeText(
-                view.getContext(),
-                 "You Selected: " + mPosition,
-                Toast.LENGTH_SHORT
-        ).show();
+        Intent intent = new Intent(view.getContext(), ViewItemActivity.class);
+        intent.putExtra("test", itemOfPosition);
+        ((Activity) view.getContext()).startActivityForResult(intent,1102);
+
     }
 }

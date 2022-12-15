@@ -35,6 +35,8 @@ public class MainActivityViewModel extends AndroidViewModel {
         mRepository.insert(item);
     }
 
+    void updateItem(Item newItem) {mRepository.updateItem(newItem);}
+
     void deleteAll() {
         mRepository.deleteAll();
     }

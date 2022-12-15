@@ -20,7 +20,7 @@ public class ItemListAdapter extends ListAdapter<Item, ItemViewHolder> {
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Item current = getItem(position);
-        holder.bind(current.getName(), current.getDescription(), current.getLocation());
+        holder.bind(current);
     }
 
     static class ItemDiff extends DiffUtil.ItemCallback<Item> {
