@@ -29,11 +29,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String EXTRA_REPLY_NEW_ITEM = "com.example.android.itemListSQL.REPLY.NEW_ITEM";
-    public static final String EXTRA_REPLY_OLD_ITEM = "com.example.android.itemListSQL.REPLY.OLD_ITEM";
-    public static final String EXTRA_REPLY_ITEM = "com.example.android.itemListSQL.REPLY.ITEM";
+    public static final String EXTRA_REPLY_NEW_ITEM = "NEW_ITEM";
+    public static final String EXTRA_REPLY_ITEM = "REPLY.ITEM";
 
     public static final int NEW_Item_ACTIVITY_REQUEST_CODE = 1;
+    public static final int UPDATE_Item_ACTIVITY_REQUEST_CODE = 2;
 
     private MainActivityViewModel mMainActivityViewModel;
 
@@ -73,23 +73,51 @@ public class MainActivity extends AppCompatActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        System.out.println(resultCode);
 
-        if (requestCode == 1102 && resultCode == RESULT_OK) {
-            Item newItem = (Item) data.getSerializableExtra(EXTRA_REPLY_NEW_ITEM);
-            System.out.println(newItem.getName());
+        int ErrCode = data.getExtras().getInt("ErrorCode");
 
-            mMainActivityViewModel.updateItem(newItem);
-        }
+        Item item = (Item) data.getSerializableExtra(EXTRA_REPLY_ITEM);
 
-        if (requestCode == NEW_Item_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Item item = (Item) data.getSerializableExtra(EXTRA_REPLY_ITEM);
-            mMainActivityViewModel.insert(item);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case NEW_Item_ACTIVITY_REQUEST_CODE:
+                    mMainActivityViewModel.insert(item);
+                    break;
+
+                case UPDATE_Item_ACTIVITY_REQUEST_CODE:
+                    mMainActivityViewModel.update(item);
+                    break;
+            }
         }
         else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
+            CheckErrCode(ErrCode);
+        }
+
+    }
+
+    private void CheckErrCode(int ErrCode) {
+        switch (ErrCode) {
+            case 1:
+                Toast.makeText(
+                        getApplicationContext(),
+                        R.string.empty_not_saved,
+                        Toast.LENGTH_LONG).show();
+                break;
+
+            case 2:
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Save Button Was not pressed",
+                        Toast.LENGTH_LONG).show();
+                break;
+
+            case 3:
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Add Button Was not pressed",
+                        Toast.LENGTH_LONG).show();
+                break;
         }
     }
 

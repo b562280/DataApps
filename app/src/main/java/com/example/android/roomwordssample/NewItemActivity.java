@@ -30,7 +30,7 @@ import android.widget.EditText;
 
 public class NewItemActivity extends AppCompatActivity {
 
-    public static final String EXTRA_REPLY_ITEM = "com.example.android.itemListSQL.REPLY.ITEM";
+    public static final String EXTRA_REPLY_ITEM = "REPLY.ITEM";
 
     private EditText mEditItemName, mEditItemDesc, mEditItemLoc;
 
@@ -46,10 +46,14 @@ public class NewItemActivity extends AppCompatActivity {
 
         final Button button = findViewById(R.id.button_save);
 
+        Intent replyIntent = new Intent();
+        setResult(RESULT_CANCELED, replyIntent);
+        replyIntent.putExtra("ErrorCode", 3);
+
         button.setOnClickListener(view -> {
-            Intent replyIntent = new Intent();
 
             if (checkIfTextFieldsEmpty()) {
+                replyIntent.putExtra("ErrorCode", 1);
                 setResult(RESULT_CANCELED, replyIntent);
             }
 

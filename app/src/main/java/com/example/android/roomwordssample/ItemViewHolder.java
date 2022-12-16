@@ -6,17 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    private final TextView ItemViewName;
-    private final TextView ItemViewDesc;
-    private final TextView ItemViewLoc;
-    private Item itemOfPosition;
+    private final TextView ItemViewName, ItemViewDesc, ItemViewLoc;
+    private Item CurrentItem;
+    public static final String ITEM_TO_UPDATE = "UPDATE_ITEM";
 
 
     private ItemViewHolder(View itemView) {
@@ -31,7 +27,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         ItemViewDesc.setText(item.getDescription());
         ItemViewName.setText(item.getName());
         ItemViewLoc.setText(item.getLocation());
-        itemOfPosition = item;
+        CurrentItem = item;
     }
 
     static ItemViewHolder create(ViewGroup parent) {
@@ -43,8 +39,7 @@ public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     @Override
     public void onClick(View view) {
         Intent intent = new Intent(view.getContext(), ViewItemActivity.class);
-        intent.putExtra("test", itemOfPosition);
-        ((Activity) view.getContext()).startActivityForResult(intent,1102);
-
+        intent.putExtra(ITEM_TO_UPDATE, CurrentItem);
+        ((Activity) view.getContext()).startActivityForResult(intent,2);
     }
 }

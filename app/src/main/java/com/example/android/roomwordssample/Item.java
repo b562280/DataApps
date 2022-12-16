@@ -2,6 +2,7 @@ package com.example.android.roomwordssample;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -11,6 +12,8 @@ import java.io.Serializable;
 
 public class Item implements Serializable {
     @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "ID")
     int ID;
 
     @NonNull
@@ -44,5 +47,20 @@ public class Item implements Serializable {
     @NonNull
     public String getDescription() {
         return mDescription;
+    }
+
+
+    public int getID() {return ID;}
+
+    public void setName(@NonNull String mName) {
+        this.mName = mName;
+    }
+
+    public void setLocation(@NonNull String mLocation) {
+        this.mLocation = mLocation;
+    }
+
+    public void setDescription(@NonNull String mDescription) {
+        this.mDescription = mDescription;
     }
 }

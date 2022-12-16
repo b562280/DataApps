@@ -40,9 +40,9 @@ public class ItemRepository {
         });
     }
 
-    void updateItem(Item newItem) {
+    void update(Item newItem) {
         ItemRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mItemDao.updateItem(newItem);
+            mItemDao.update(newItem);
         });
     }
 }

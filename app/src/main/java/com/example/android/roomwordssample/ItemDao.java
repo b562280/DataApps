@@ -1,5 +1,7 @@
 package com.example.android.roomwordssample;
 
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -25,6 +27,6 @@ public interface ItemDao {
     @Query("DELETE FROM item_table")
     void deleteAll();
 
-    @Update
-    void updateItem (Item item);
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void update(Item item);
 }

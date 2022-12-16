@@ -16,6 +16,7 @@ limitations under the License. -->
     <string name="app_name">Data Modelled Apps</string>
     <string name="action_settings">Settings</string>
     <string name="hint_item">Item…</string>
+    <string name="button_add">Add</string>
     <string name="button_save">Save</string>
     <string name="empty_not_saved">Item not saved because it is empty.</string>
     <string name="add_item">Add Item</string>
